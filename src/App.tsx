@@ -52,7 +52,7 @@ const Nav = () => {
           <div className="w-8 h-8 bg-accent rounded-sm flex items-center justify-center text-black">
             <Terminal size={18} />
           </div>
-          <span>SERGE<span className="text-accent">.DEV</span></span>
+          <span>SB</span>
         </motion.div>
         
         <div className="hidden md:flex items-center gap-8">
@@ -192,6 +192,15 @@ const About = () => {
                 Mein Ziel ist es, nicht nur funktionierende Interfaces zu bauen, sondern Lösungen, 
                 die Menschen wirklich verstehen und gerne nutzen – dabei hilft mir auch mein Hintergrund im Marketing.
               </p>
+            </div>
+            <div className="cv-link mb-4 flex items-center gap-3 pt-[20px]">
+              <a href="/build/Lebenslauf_Serhii_Babych.pdf" target="_blank">
+              <img src="/public/PDF_image.png" alt="Download PDF" width="30" /></a>
+              <a href="/public/Lebenslauf_Serhii_Babych.pdf" target="_blank">
+              <h3 className="flex items-center gap-2 text-sm font-mono uppercase text-accent">
+                  Lebenslauf
+                </h3>
+              </a>
             </div>
           </motion.div>
         </div>
