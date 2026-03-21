@@ -1,5 +1,7 @@
 import { Project, Technology } from './types';
 import Nutriki from "/public/nutriki.jpg"
+import UrbanStroll from "/public/urbanstroll.jpg"
+import Techfix from "/public/texfix.jpg"
 
 export const PROJECTS: Project[] = [
   {
@@ -9,7 +11,7 @@ export const PROJECTS: Project[] = [
     tech: ['React', 'TypeScript', 'Vite', 'Tailwind', 'Node.js', 'Vercel'],
     githubUrl: 'https://github.com/SerhiiBab/nutritrack.git',
     previewUrl: 'https://nutriki.vercel.app/',
-    imageUrl: Nutriki,
+    imageUrl: Nutriki
   },
   {
     id: '2',
@@ -18,7 +20,7 @@ export const PROJECTS: Project[] = [
     tech: ['React', 'TypeScript', 'Vite', 'Tailwind', 'Node.js', 'Vercel'],
     githubUrl: 'https://github.com/SerhiiBab/urbanstroll.git',
     previewUrl: 'https://urbanstroll.vercel.app/',
-    imageUrl: '/public/urbanstroll.jpg'
+    imageUrl: UrbanStroll
   },
   {
     id: '3',
@@ -27,7 +29,7 @@ export const PROJECTS: Project[] = [
     tech: ['React', 'TypeScript', 'Vite', 'Tailwind',  'Node.js', 'Vercel'],
     githubUrl: 'https://github.com/SerhiiBab/techfix-pro.git',
     previewUrl: 'https://techfixservice.vercel.app/',
-    imageUrl: '/public/texfix.jpg'
+    imageUrl: Techfix
   }
 ];
 
