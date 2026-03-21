@@ -416,6 +416,7 @@ const Contact = () => {
                     <div className="space-y-2">
                       <label className="text-xs font-mono text-white/40 uppercase tracking-widest">Name</label>
                       <input 
+                        name="name"
                         required
                         type="text" 
                         className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 focus:outline-none focus:border-accent transition-colors"
@@ -425,6 +426,7 @@ const Contact = () => {
                     <div className="space-y-2">
                       <label className="text-xs font-mono text-white/40 uppercase tracking-widest">Email</label>
                       <input 
+                        name="email"
                         required
                         type="email" 
                         className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 focus:outline-none focus:border-accent transition-colors"
@@ -435,6 +437,7 @@ const Contact = () => {
                   <div className="space-y-2">
                     <label className="text-xs font-mono text-white/40 uppercase tracking-widest">Betreff</label>
                     <input 
+                      name="subject"
                       required
                       type="text" 
                       className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 focus:outline-none focus:border-accent transition-colors"
@@ -445,6 +448,7 @@ const Contact = () => {
                     <label className="text-xs font-mono text-white/40 uppercase tracking-widest">Nachricht</label>
                     <textarea 
                       required
+                      name="message"
                       rows={5}
                       className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 focus:outline-none focus:border-accent transition-colors resize-none"
                       placeholder="Ihre Nachricht..."
