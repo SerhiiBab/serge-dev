@@ -199,7 +199,7 @@ const About = () => {
             <div className="cv-link mb-4 flex items-center gap-3 pt-[20px]">
               <a href="/build/Lebenslauf_Serhii_Babych.pdf" target="_blank">
               <img src={PdfImage} alt="Download PDF" width="30" /></a>
-              <a href="/public/Lebenslauf_Serhii_Babych.pdf" target="_blank">
+              <a href="/public/Lebenslauf_Serhii_Babych26.pdf" target="_blank">
               <h3 className="flex items-center gap-2 text-sm font-mono uppercase text-accent">
                   Lebenslauf
                 </h3>
@@ -549,6 +549,7 @@ const Footer = () => {
         <div className="flex gap-8">
           <a
              href="https://linkedin.com/in/serhii-babych-24251125b"
+             target="_blank"
              className="text-xs font-mono text-white/40 uppercase tracking-widest hover:text-accent transition-colors"
           >
            LinkedIn
@@ -556,6 +557,7 @@ const Footer = () => {
 
           <a
            href="https://github.com/SerhiiBab/"
+           target="_blank"
            className="text-xs font-mono text-white/40 uppercase tracking-widest hover:text-accent transition-colors"
           >
            GitHub
