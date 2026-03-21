@@ -20,6 +20,10 @@
   }
 }
 
+a:hover, button:hover {
+  cursor: pointer;
+}
+
 .glass {
   @apply bg-white/5 backdrop-blur-md border border-white/10;
 }

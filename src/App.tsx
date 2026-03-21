@@ -394,7 +394,7 @@ const Contact = () => {
             </p>
             
             <div className="space-y-8">
-              <a href="mailto:sergebabych@gmail.com" className="flex items-center gap-4 group">
+              <a href="mailto:sergebabych@gmail.com" className="flex items-center hover:text-accent gap-4 group">
                 <div className="w-12 h-12 glass rounded-full flex items-center justify-center group-hover:bg-accent group-hover:text-black transition-all">
                   <Mail size={20} />
                 </div>
