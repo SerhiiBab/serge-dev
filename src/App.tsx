@@ -17,6 +17,7 @@ import {
 } from 'lucide-react';
 import { PROJECTS, TECHNOLOGIES } from './constants';
 import SerhiiFoto from '/public/serge-foto.png'
+import PdfImage from '/public/PDF_image.png'
 
 
 const Nav = () => {
@@ -197,7 +198,7 @@ const About = () => {
             </div>
             <div className="cv-link mb-4 flex items-center gap-3 pt-[20px]">
               <a href="/build/Lebenslauf_Serhii_Babych.pdf" target="_blank">
-              <img src="/public/PDF_image.png" alt="Download PDF" width="30" /></a>
+              <img src={PdfImage} alt="Download PDF" width="30" /></a>
               <a href="/public/Lebenslauf_Serhii_Babych.pdf" target="_blank">
               <h3 className="flex items-center gap-2 text-sm font-mono uppercase text-accent">
                   Lebenslauf
