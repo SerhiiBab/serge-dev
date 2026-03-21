@@ -333,26 +333,36 @@ const Projects = () => {
 const Contact = () => {
   const [formState, setFormState] = useState<'idle' | 'sending' | 'sent'>('idle');
 
-  const handleSubmit = async (e) => {
-  e.preventDefault();
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
 
-  const formData = new FormData(e.target);
+    const formData = new FormData(e.currentTarget);
 
-  const data = {
-    name: formData.get("name"),
-    email: formData.get("email"),
-    subject: formData.get("subject"),
-    message: formData.get("message")
+    const data = {
+      name: formData.get("name"),
+      email: formData.get("email"),
+      subject: formData.get("subject"),
+      message: formData.get("message")
+    };
+
+    try {
+      setFormState("sending");
+
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data)
+      });
+
+      if (!res.ok) throw new Error("Fehler beim Senden");
+
+      setFormState("sent");
+      e.currentTarget.reset(); // очищаем форму
+    } catch (err) {
+      console.error(err);
+      setFormState("idle"); // можно добавить отдельное состояние 'error'
+    }
   };
-
-  await fetch("/api/contact", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify(data)
-  });
-};
 
   return (
     <section id="kontakt" className="py-32 relative overflow-hidden">
