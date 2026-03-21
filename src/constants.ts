@@ -1,4 +1,5 @@
 import { Project, Technology } from './types';
+import Nutriki from "/public/nutriki.jpg"
 
 export const PROJECTS: Project[] = [
   {
@@ -8,7 +9,7 @@ export const PROJECTS: Project[] = [
     tech: ['React', 'TypeScript', 'Vite', 'Tailwind', 'Node.js', 'Vercel'],
     githubUrl: 'https://github.com/SerhiiBab/nutritrack.git',
     previewUrl: 'https://nutriki.vercel.app/',
-    imageUrl: '/public/nutriki.jpg'
+    imageUrl: Nutriki,
   },
   {
     id: '2',

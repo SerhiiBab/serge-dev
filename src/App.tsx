@@ -17,6 +17,7 @@ import {
 } from 'lucide-react';
 import { PROJECTS, TECHNOLOGIES } from './constants';
 
+
 const Nav = () => {
   const [scrolled, setScrolled] = useState(false);
 
