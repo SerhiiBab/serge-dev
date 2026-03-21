@@ -331,50 +331,59 @@ const Projects = () => {
 };
 
 const Contact = () => {
-  const [formState, setFormState] = useState<'idle' | 'sending' | 'sent'>('idle');
+  const [formState, setFormState] = useState<"idle" | "sending" | "sent">("idle");
 
-const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-  e.preventDefault();
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    subject: "",
+    message: ""
+  });
 
-  const formData = new FormData(e.currentTarget);
-
-  const data = {
-    name: formData.get("name"),
-    email: formData.get("email"),
-    subject: formData.get("subject"),
-    message: formData.get("message")
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
   };
 
-  try {
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
     setFormState("sending");
 
-    const res = await fetch("/api/contact", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data)
-    });
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(formData)
+      });
 
-    if (!res.ok) throw new Error("Fehler beim Senden");
+      if (!res.ok) throw new Error("Send error");
 
-    // Сначала очищаем форму
-    e.currentTarget.reset();
+      setFormState("sent");
 
-    // Потом меняем состояние на 'sent'
-    setFormState("sent");
+      setFormData({
+        name: "",
+        email: "",
+        subject: "",
+        message: ""
+      });
 
-  } catch (err) {
-    console.error(err);
-    setFormState("idle"); // можно добавить отдельное состояние 'error'
-  }
-};
+    } catch (error) {
+      console.error(error);
+      setFormState("idle");
+    }
+  };
 
   return (
-    <section id="kontakt" className="py-32 relative overflow-hidden">
-      <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
-      
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-20">
-          <div>
+    <section id="contact" className="py-24">
+      <div className="max-w-3xl mx-auto px-4">
+<div>
             <span className="text-accent font-mono text-sm uppercase tracking-[0.3em] block mb-4">Kontakt</span>
             <h2 className="text-4xl md:text-6xl font-display font-bold mb-8">KONTAKT <br />AUFNEHMEN</h2>
             <p className="text-white/60 text-lg mb-12 max-w-md">
@@ -395,95 +404,136 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
               
             </div>
           </div>
-          
-          <div className="glass p-8 md:p-12 rounded-2xl relative">
-            <AnimatePresence mode="wait">
-              {formState === 'sent' ? (
-                <motion.div 
-                  key="success"
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  className="h-full flex flex-col items-center justify-center text-center py-20"
-                >
-                  <div className="w-20 h-20 bg-accent/20 text-accent rounded-full flex items-center justify-center mb-6">
-                    <Send size={32} />
-                  </div>
-                  <h3 className="text-2xl font-display font-bold mb-2">NACHRICHT GESENDET!</h3>
-                  <p className="text-white/60">Ich werde mich so schnell wie möglich bei Ihnen melden.</p>
-                  <button 
-                    onClick={() => setFormState('idle')}
-                    className="mt-8 text-accent font-mono text-sm uppercase tracking-widest hover:underline"
-                  >
-                    Weitere Nachricht senden
-                  </button>
-                </motion.div>
-              ) : (
-                <motion.form 
-                  key="form"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  onSubmit={handleSubmit} 
-                  className="space-y-6"
-                >
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div className="space-y-2">
-                      <label className="text-xs font-mono text-white/40 uppercase tracking-widest">Name</label>
-                      <input 
-                        name="name"
-                        required
-                        type="text" 
-                        className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 focus:outline-none focus:border-accent transition-colors"
-                        placeholder="Ihre Name"
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <label className="text-xs font-mono text-white/40 uppercase tracking-widest">Email</label>
-                      <input 
-                        name="email"
-                        required
-                        type="email" 
-                        className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 focus:outline-none focus:border-accent transition-colors"
-                        placeholder="name@beispiel.de"
-                      />
-                    </div>
-                  </div>
-                  <div className="space-y-2">
-                    <label className="text-xs font-mono text-white/40 uppercase tracking-widest">Betreff</label>
-                    <input 
-                      name="subject"
-                      required
-                      type="text" 
-                      className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 focus:outline-none focus:border-accent transition-colors"
-                      placeholder="Projektanfrage"
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <label className="text-xs font-mono text-white/40 uppercase tracking-widest">Nachricht</label>
-                    <textarea 
-                      required
-                      name="message"
-                      rows={5}
-                      className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 focus:outline-none focus:border-accent transition-colors resize-none"
-                      placeholder="Ihre Nachricht..."
-                    />
-                  </div>
-                  <button 
-                    disabled={formState === 'sending'}
-                    className="w-full py-4 bg-accent text-black font-bold rounded-lg flex items-center justify-center gap-2 hover:bg-white transition-colors disabled:opacity-50"
-                  >
-                    {formState === 'sending' ? 'SENDET...' : 'NACHRICHT SENDEN'}
-                    <Send size={18} />
-                  </button>
-                </motion.form>
-              )}
-            </AnimatePresence>
-          </div>
-        </div>
+        <AnimatePresence mode="wait">
+
+          {formState === "sent" ? (
+
+            <motion.div
+              key="success"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="text-center"
+            >
+              <h3 className="text-2xl font-bold mb-4">
+                Nachricht gesendet!
+              </h3>
+
+              <p className="text-white/60">
+                Vielen Dank für Ihre Nachricht. Ich melde mich bald bei Ihnen.
+              </p>
+
+              <button
+                onClick={() => setFormState("idle")}
+                className="mt-6 px-6 py-3 bg-accent text-black rounded-lg"
+              >
+                Neue Nachricht
+              </button>
+
+            </motion.div>
+
+          ) : (
+
+            <motion.form
+              key="form"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onSubmit={handleSubmit}
+              className="space-y-6"
+            >
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                <div className="space-y-2">
+                  <label className="text-xs font-mono text-white/40 uppercase">
+                    Name
+                  </label>
+
+                  <input
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    required
+                    type="text"
+                    className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3"
+                    placeholder="Ihr Name"
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <label className="text-xs font-mono text-white/40 uppercase">
+                    Email
+                  </label>
+
+                  <input
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    required
+                    type="email"
+                    className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3"
+                    placeholder="name@beispiel.de"
+                  />
+                </div>
+
+              </div>
+
+              <div className="space-y-2">
+                <label className="text-xs font-mono text-white/40 uppercase">
+                  Betreff
+                </label>
+
+                <input
+                  name="subject"
+                  value={formData.subject}
+                  onChange={handleChange}
+                  required
+                  type="text"
+                  className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3"
+                  placeholder="Projektanfrage"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <label className="text-xs font-mono text-white/40 uppercase">
+                  Nachricht
+                </label>
+
+                <textarea
+                  name="message"
+                  value={formData.message}
+                  onChange={handleChange}
+                  required
+                  rows={5}
+                  className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 resize-none"
+                  placeholder="Ihre Nachricht..."
+                />
+              </div>
+
+              <button
+                type="submit"
+                disabled={formState === "sending"}
+                className="w-full py-4 bg-accent text-black font-bold rounded-lg flex items-center justify-center gap-2 hover:bg-white transition-colors disabled:opacity-50"
+              >
+                {formState === "sending"
+                  ? "SENDET..."
+                  : "NACHRICHT SENDEN"}
+
+                <Send size={18} />
+              </button>
+
+            </motion.form>
+
+          )}
+
+        </AnimatePresence>
+
       </div>
     </section>
   );
 };
+
 
 const Footer = () => {
   return (
