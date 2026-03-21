@@ -108,7 +108,7 @@ const Hero = () => {
           
           <div className="flex flex-wrap gap-4">
             <motion.a
-              href="#projects"
+              href="#projekte"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               className="px-8 py-4 bg-accent text-black font-bold rounded-sm flex items-center gap-2 hover:bg-white transition-colors"
@@ -116,7 +116,7 @@ const Hero = () => {
               PROJEKTE ANSEHEN <ChevronRight size={18} />
             </motion.a>
             <motion.a
-              href="#contact"
+              href="#kontakt"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               className="px-8 py-4 glass text-white font-bold rounded-sm flex items-center gap-2 hover:bg-white/10 transition-colors"
