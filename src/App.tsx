@@ -16,6 +16,7 @@ import {
   MessageSquare
 } from 'lucide-react';
 import { PROJECTS, TECHNOLOGIES } from './constants';
+import SerhiiFoto from '/public/serge-foto.png'
 
 
 const Nav = () => {
@@ -151,7 +152,7 @@ const About = () => {
           >
             <div className="aspect-square rounded-2xl overflow-hidden border-white/10 relative group">
               <img 
-                src="/public/serge-foto.png" 
+                src={SerhiiFoto} 
                 alt="Developer" 
                 className="w-full h-full "
                 referrerPolicy="no-referrer"
