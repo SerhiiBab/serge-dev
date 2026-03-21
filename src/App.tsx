@@ -548,7 +548,7 @@ const Footer = () => {
         </div>
         <div className="flex gap-8">
           <a
-             href="www.linkedin.com/in/serhii-babych-24251125b"
+             href="https://linkedin.com/in/serhii-babych-24251125b"
              className="text-xs font-mono text-white/40 uppercase tracking-widest hover:text-accent transition-colors"
           >
            LinkedIn
