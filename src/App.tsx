@@ -18,6 +18,7 @@ import {
 import { PROJECTS, TECHNOLOGIES } from './constants';
 import SerhiiFoto from '/public/serge-foto.png'
 import PdfImage from '/public/PDF_image.png'
+import PdfLebenslauf from '/public/Lebenslauf_Serhii_Babych26.pdf'
 
 
 const Nav = () => {
@@ -197,9 +198,9 @@ const About = () => {
               </p>
             </div>
             <div className="cv-link mb-4 flex items-center gap-3 pt-[20px]">
-              <a href="/public/Lebenslauf_Serhii_Babych26.pdf" target="_blank">
+              <a href={PdfLebenslauf} target="_blank">
               <img src={PdfImage} alt="Download PDF" width="30" /></a>
-              <a href="/public/Lebenslauf_Serhii_Babych26.pdf" target="_blank">
+              <a href={PdfLebenslauf} target="_blank">
               <h3 className="flex items-center gap-2 text-sm font-mono uppercase text-accent">
                   Lebenslauf
                 </h3>
