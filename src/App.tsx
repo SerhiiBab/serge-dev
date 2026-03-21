@@ -381,9 +381,11 @@ const Contact = () => {
   };
 
   return (
-    <section id="contact" className="py-24">
-      <div className="max-w-3xl mx-auto px-4">
-<div>
+    <section id="kontakt" className="py-32 relative overflow-hidden">
+      <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+      <div className="max-w-7xl mx-auto px-6 flex flex-col lg:flex-row justify-between">
+        <div className="grid grid-cols-1">
+         <div>
             <span className="text-accent font-mono text-sm uppercase tracking-[0.3em] block mb-4">Kontakt</span>
             <h2 className="text-4xl md:text-6xl font-display font-bold mb-8">KONTAKT <br />AUFNEHMEN</h2>
             <p className="text-white/60 text-lg mb-12 max-w-md">
@@ -404,6 +406,7 @@ const Contact = () => {
               
             </div>
           </div>
+        </div>
         <AnimatePresence mode="wait">
 
           {formState === "sent" ? (
@@ -528,6 +531,7 @@ const Contact = () => {
           )}
 
         </AnimatePresence>
+
 
       </div>
     </section>
