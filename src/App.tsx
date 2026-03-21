@@ -333,36 +333,40 @@ const Projects = () => {
 const Contact = () => {
   const [formState, setFormState] = useState<'idle' | 'sending' | 'sent'>('idle');
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  e.preventDefault();
 
-    const formData = new FormData(e.currentTarget);
+  const formData = new FormData(e.currentTarget);
 
-    const data = {
-      name: formData.get("name"),
-      email: formData.get("email"),
-      subject: formData.get("subject"),
-      message: formData.get("message")
-    };
-
-    try {
-      setFormState("sending");
-
-      const res = await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data)
-      });
-
-      if (!res.ok) throw new Error("Fehler beim Senden");
-
-      setFormState("sent");
-      e.currentTarget.reset(); // очищаем форму
-    } catch (err) {
-      console.error(err);
-      setFormState("idle"); // можно добавить отдельное состояние 'error'
-    }
+  const data = {
+    name: formData.get("name"),
+    email: formData.get("email"),
+    subject: formData.get("subject"),
+    message: formData.get("message")
   };
+
+  try {
+    setFormState("sending");
+
+    const res = await fetch("/api/contact", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data)
+    });
+
+    if (!res.ok) throw new Error("Fehler beim Senden");
+
+    // Сначала очищаем форму
+    e.currentTarget.reset();
+
+    // Потом меняем состояние на 'sent'
+    setFormState("sent");
+
+  } catch (err) {
+    console.error(err);
+    setFormState("idle"); // можно добавить отдельное состояние 'error'
+  }
+};
 
   return (
     <section id="kontakt" className="py-32 relative overflow-hidden">
