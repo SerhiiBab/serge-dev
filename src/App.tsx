@@ -533,7 +533,7 @@ const Footer = () => {
     <footer className="py-12 border-t border-white/10">
       <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
         <div className="text-xs font-mono text-white/40 uppercase tracking-widest">
-          © 2026 SERGE DEV. ALLE RECHTE VORBEHALTEN.
+          © 2026 BABYCH.de ALLE RECHTE VORBEHALTEN.
         </div>
         <div className="flex gap-8">
           <a
