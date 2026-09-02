@@ -16,9 +16,7 @@ import {
   MessageSquare
 } from 'lucide-react';
 import { PROJECTS, TECHNOLOGIES } from './constants';
-import SerhiiFoto from '/public/serge-foto.png'
-import PdfImage from '/public/PDF_image.png'
-import PdfLebenslauf from '/public/Lebenslauf_Serhii_Babych26.pdf'
+import SerhiiFoto from '/serge-foto.png'
 
 
 const Nav = () => {
@@ -180,32 +178,22 @@ const About = () => {
               <span className="text-accent font-mono text-sm uppercase tracking-[0.3em]">Wer ich bin</span>
             </div>
             <h2 className="text-4xl md:text-4xl font-display font-bold mb-8">
-              Hallo<br /> mein Name ist Serhii Babych.<br /> Ich bin Frontend-Entwickler mit Fokus auf moderne, benutzerfreundliche Webanwendungen
+              Hallo<br /> mein Name ist Serhii Babych.<br />Ich bin Webentwickler mit Schwerpunkt Frontend und Erfahrung in der Fullstack-Entwicklung.
             </h2>
             <div className="space-y-6 text-white/70 leading-relaxed">
               <p>
                 Schon seit meiner Schulzeit interessiere ich mich für die Entwicklung von Interfaces.
-                Meinen ersten eigenen Website-Prototyp habe ich in der 9. Klasse gebaut – leider habe ich ihn später verloren, 
-                weil ich damals noch nicht wusste, wie wichtig Backups sind. 
-                Aber genau dieser Moment hat mich geprägt und meine Begeisterung für Webentwicklung geweckt.
+                Meine erste eigene Website habe ich in der 9. Klasse gebaut – leider habe ich ihn später verloren, 
+                weil ich damals noch nicht wusste, wie wichtig Backups sind.💾
               </p>
               <p>
-                Heute arbeite ich mit modernen Webtechnologien und entwickle mich kontinuierlich weiter.
+                Ich arbeite hauptsächlich mit React, TypeScript und modernen Webtechnologien und erweitere meinen Stack 
+                zunehmend um Backend-Entwicklung mit Node.js und PostgreSQL. Mein Hintergrund im Marketing hilft mir dabei, 
+                technische Lösungen nicht nur funktional, sondern auch aus Sicht der Nutzer und des Produkts zu betrachten.
               </p>
-              <p>
-                Mein Ziel ist es, nicht nur funktionierende Interfaces zu bauen, sondern Lösungen, 
-                die Menschen wirklich verstehen und gerne nutzen – dabei hilft mir auch mein Hintergrund im Marketing.
-              </p>
+
             </div>
-            <div className="cv-link mb-4 flex items-center gap-3 pt-[20px]">
-              <a href={PdfLebenslauf} target="_blank">
-              <img src={PdfImage} alt="Download PDF" width="30" /></a>
-              <a href={PdfLebenslauf} target="_blank">
-              <h3 className="flex items-center gap-2 text-sm font-mono uppercase text-accent">
-                  Lebenslauf
-                </h3>
-              </a>
-            </div>
+           
           </motion.div>
         </div>
       </div>
@@ -230,7 +218,7 @@ const TechStack = () => {
           </div>
           <div className="h-px flex-1 bg-white/10 hidden md:block" />
           <p className="max-w-xs text-white/40 text-sm font-mono text-center md:text-right">
-            Ständige Weiterentwicklung mit den neuesten Frontend-Technologien und Best Practices.
+            Moderne Webentwicklung mit Fokus auf Frontend, Fullstack-Technologien und Best Practices.
           </p>
         </div>
         
