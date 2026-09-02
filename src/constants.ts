@@ -25,7 +25,7 @@ export const PROJECTS: Project[] = [
   },  
   {
     id: '3',
-    title: 'UrbanStroll',
+    title: 'UrbanStrollL',
     description: 'Mit diesem Projekt wollte ich ein häufiges Problem lösen: die Wahl einer passenden Route für einen Spaziergang – besonders für Menschen, die eine Stadt nicht gut kennen. Die Webanwendung ist mit einem AI-Assistenten verbunden, der auf Basis einer einfachen Nutzeranfrage personalisierte Spazier-Routen erstellt. Der Nutzer beschreibt kurz seine Wünsche, und die AI generiert eine passende Route durch die Stadt.',
     tech: ['React', 'TypeScript', 'Vite', 'Tailwind', 'Node.js', 'Vercel'],
     githubUrl: 'https://github.com/SerhiiBab/urbanstroll.git',
