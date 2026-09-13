@@ -29,7 +29,7 @@ const Nav = () => {
   }, []);
 
   function getExperience() {
-  const startDate = new Date(2019, 11); // Декабрь = 11 (месяцы с 0)
+  const startDate = new Date(2019, 11);
   const now = new Date();
 
   let years = now.getFullYear() - startDate.getFullYear();
@@ -95,7 +95,7 @@ const Hero = () => {
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-75"></span>
               <span className="relative inline-flex rounded-full h-2 w-2 bg-accent"></span>
             </span>
-            BEREIT FÜR NEUE HERAUSFORDERUNGEN
+            1BEREIT FÜR NEUE HERAUSFORDERUNGEN
           </div>
           
           <h1 className="text-6xl md:text-8xl lg:text-9xl font-display font-bold tracking-tighter leading-[0.9] mb-8">
