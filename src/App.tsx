@@ -28,20 +28,7 @@ const Nav = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  function getExperience() {
-  const startDate = new Date(2019, 11);
-  const now = new Date();
 
-  let years = now.getFullYear() - startDate.getFullYear();
-  let months = now.getMonth() - startDate.getMonth();
-
-  if (months < 0) {
-    years--;
-    months += 12;
-  }
-
-  return `${years} Jahre ${months} Monate`;
-}
 
   return (
     <nav className={`fixed top-0 left-0 w-full z-40 transition-all duration-300 ${scrolled ? 'bg-bg/80 backdrop-blur-md py-4 border-b border-white/10' : 'py-8'}`}>
@@ -95,7 +82,7 @@ const Hero = () => {
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-75"></span>
               <span className="relative inline-flex rounded-full h-2 w-2 bg-accent"></span>
             </span>
-            1BEREIT FÜR NEUE HERAUSFORDERUNGEN
+            BEREIT FÜR NEUE HERAUSFORDERUNGEN
           </div>
           
           <h1 className="text-6xl md:text-8xl lg:text-9xl font-display font-bold tracking-tighter leading-[0.9] mb-8">
