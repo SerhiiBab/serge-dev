@@ -67,8 +67,8 @@ const Hero = () => {
   return (
     <section className="min-h-screen flex flex-col justify-center relative overflow-hidden pt-20">
       <div className="absolute inset-0 z-0">
-        <div className="absolute top-1/4 -left-20 w-96 h-96 bg-accent/10 rounded-full blur-3xl animate-pulse" />
-        <div className="absolute bottom-1/4 -right-20 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl animate-pulse" />
+        <div className="absolute top-1/4 -left-20 w-96 h-96 bg-accent/15 rounded-full blur-3xl animate-pulse" />
+        <div className="absolute bottom-1/4 -right-20 w-96 h-96 bg-blue-500/15 rounded-full blur-3xl animate-pulse" />
       </div>
 
       <div className="max-w-7xl mb-[100px] mx-auto px-6 relative z-10">
