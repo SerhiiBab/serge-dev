@@ -146,12 +146,12 @@ const About = () => {
               />
               <div className="absolute" />
             </div>
-            <div className="absolute -bottom-10 -right-10 w-48 h-48 glass rounded-2xl p-6 hidden md:block">
-              <div className="text-4xl font-display font-bold text-accent mb-1">4+</div>
-              <div className="text-xl font-mono text-white/60 uppercase tracking-widest">Jahre <br />Erfahrung</div>
-              <div className="mt-4 flex gap-1">
+            <div className="absolute -bottom-10 -right-10 w-68 h-68 glass rounded-2xl p-6 hidden md:block">
+              <div className="text-4xl font-display font-bold text-accent mb-1">Hallo,</div>
+              <div className="text-4xl font-display font-bold text-accent mb-1">ich bin<br />Serhii Babych</div>
+              {/*<div className="mt-4 flex gap-1">
                 {[1,2,3,4,5].map(i => <div key={i} className="w-1 h-1 bg-accent rounded-full" />)}
-              </div>
+              </div>*/}
             </div>
           </motion.div>
           
@@ -165,7 +165,7 @@ const About = () => {
               <span className="text-accent font-mono text-sm uppercase tracking-[0.3em]">Wer ich bin</span>
             </div>
             <h2 className="text-4xl md:text-4xl font-display font-bold mb-8">
-              Hallo<br /> mein Name ist Serhii Babych.<br />Ich bin Webentwickler mit Schwerpunkt Frontend und Erfahrung in der Fullstack-Entwicklung.
+              Ich bin Webentwickler mit Schwerpunkt Frontend und Erfahrung in der Fullstack-Entwicklung.
             </h2>
             <div className="space-y-6 text-white/70 leading-relaxed">
               <p>
