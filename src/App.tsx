@@ -550,6 +550,15 @@ const Footer = () => {
 
 
 const Timer = () => {
+
+  let date = new Date("2026-11-20 00:00:00");
+  
+  useEffect(() => {
+    console.log(date.getTime())
+  }, [date]
+
+
+  )
   // 1. Время начала отсчёта
   const [startTime, setStartTime] = useState(() => {
     const savedTime = localStorage.getItem('timerStartTime');
@@ -598,7 +607,7 @@ const Timer = () => {
     e.preventDefault();
 
     if (inputValue === '3555') {
-      const now = Date.now();
+      date = Date.now();
 
       setStartTime(now);
       setCurrentTime(now);
