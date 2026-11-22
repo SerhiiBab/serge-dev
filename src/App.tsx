@@ -17,6 +17,7 @@ import {
 } from 'lucide-react';
 import { PROJECTS, TECHNOLOGIES } from './constants';
 import SerhiiFoto from '/serge-foto.png'
+import { supabase } from '../lib/supabase';
 
 
 const Nav = () => {
@@ -550,21 +551,8 @@ const Footer = () => {
 
 
 const Timer = () => {
-
-  let date = new Date("2026-11-20 00:00:00");
-  
-  useEffect(() => {
-    console.log(date.getTime())
-  }, [date]
-
-
-  )
-  // 1. Время начала отсчёта
-  const [startTime, setStartTime] = useState(() => {
-    const savedTime = localStorage.getItem('timerStartTime');
-
-    return savedTime ? Number(savedTime) : Date.now();
-  });
+  // 1. Время начала глобального таймера
+  const [startTime, setStartTime] = useState<number | null>(null);
 
   // 2. Текущее время
   const [currentTime, setCurrentTime] = useState(Date.now());
@@ -575,7 +563,52 @@ const Timer = () => {
   // 4. Сообщение об ошибке
   const [error, setError] = useState('');
 
-  // 5. Запускаем интервал
+  // 5. Состояние загрузки
+  const [isLoading, setIsLoading] = useState(true);
+
+  const [isResetting, setIsResetting] = useState(false);
+
+  // 6. Получаем время начала таймера с сервера
+  useEffect(() => {
+    let isMounted = true;
+
+    const fetchTimer = async () => {
+      try {
+        const response = await fetch('/api/timer', {
+          cache: 'no-store',
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to fetch timer');
+        }
+
+        const data: { startedAt: string } = await response.json();
+
+        if (isMounted) {
+          setStartTime(new Date(data.startedAt).getTime());
+          setError('');
+        }
+      } catch (err) {
+        console.error('Timer loading error:', err);
+
+        if (isMounted) {
+          setError('Timer konnte nicht geladen werden.');
+        }
+      } finally {
+        if (isMounted) {
+          setIsLoading(false);
+        }
+      }
+    };
+
+    fetchTimer();
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
+  // 7. Обновляем текущее время каждую секунду
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentTime(Date.now());
@@ -584,37 +617,100 @@ const Timer = () => {
     return () => clearInterval(interval);
   }, []);
 
-  // 6. Сохраняем время начала в localStorage
+  // 8. Подключаем Supabase Realtime
   useEffect(() => {
-    localStorage.setItem('timerStartTime', String(startTime));
-  }, [startTime]);
+    const channel = supabase
+      .channel('global-timer-changes')
+      .on(
+        'postgres_changes',
+        {
+          event: 'UPDATE',
+          schema: 'public',
+          table: 'global_timer',
+          filter: 'id=eq.1',
+        },
+        (payload) => {
+          const newStartTime = new Date(
+            payload.new.started_at as string
+          ).getTime();
 
-  // 7. Вычисляем прошедшее время
-  const elapsed = Math.max(0, currentTime - startTime);
+          setStartTime(newStartTime);
+          setCurrentTime(Date.now());
+          setError('');
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, []);
+
+  // 9. Вычисляем прошедшее время
+  const elapsed = startTime === null
+    ? 0
+    : Math.max(0, currentTime - startTime);
 
   const totalSeconds = Math.floor(elapsed / 1000);
 
   const days = Math.floor(totalSeconds / 86400);
-
   const hours = Math.floor((totalSeconds % 86400) / 3600);
-
   const minutes = Math.floor((totalSeconds % 3600) / 60);
-
   const seconds = totalSeconds % 60;
 
-  // 8. Обрабатываем отправку формы
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  // 10. Обрабатываем отправку формы
+  const handleSubmit = async (
+    e: React.FormEvent<HTMLFormElement>
+  ) => {
     e.preventDefault();
 
-    if (inputValue === '3555') {
-      date = Date.now();
+    if (isResetting || !inputValue.trim()) {
+      return;
+    }
 
-      setStartTime(now);
-      setCurrentTime(now);
+    setIsResetting(true);
+    setError('');
+
+    try {
+      const response = await fetch('/api/timer', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          code: inputValue.trim(),
+        }),
+      });
+
+      const data: { startedAt?: string; error?: string } =
+        await response.json();
+
+      if (!response.ok) {
+        if (response.status === 403) {
+          setError('Falscher Code!');
+        } else {
+          setError('Fehler beim Zurücksetzen des Timers.');
+        }
+
+        return;
+      }
+
+      if (!data.startedAt) {
+        throw new Error('Server did not return startedAt');
+      }
+
+      const newStartTime = new Date(data.startedAt).getTime();
+
+      setStartTime(newStartTime);
+      setCurrentTime(Date.now());
       setInputValue('');
       setError('');
-    } else {
-      setError('Falscher Code!');
+
+    } catch (err) {
+      console.error('Timer reset error:', err);
+      setError('Server nicht erreichbar.');
+    } finally {
+      setIsResetting(false);
     }
   };
 
@@ -624,7 +720,7 @@ const Timer = () => {
 
         <div className="text-center mb-12">
           <span className="text-accent font-mono text-sm uppercase tracking-[0.3em]">
-            Livee Counter
+            Live Counter
           </span>
 
           <h2 className="text-4xl md:text-5xl font-display font-bold mt-4">
@@ -639,14 +735,14 @@ const Timer = () => {
             { label: 'Tage', value: days },
             { label: 'Stunden', value: hours },
             { label: 'Minuten', value: minutes },
-            { label: 'Sekunden', value: seconds }
+            { label: 'Sekunden', value: seconds },
           ].map((item) => (
             <div
               key={item.label}
               className="glass rounded-xl p-6 text-center border border-white/10"
             >
               <div className="text-4xl md:text-5xl font-display font-bold text-accent tabular-nums">
-                {item.value}
+                {String(item.value).padStart(2, '0')}
               </div>
 
               <div className="text-xs font-mono text-white/40 uppercase tracking-widest mt-3">
@@ -657,16 +753,21 @@ const Timer = () => {
 
         </div>
 
+        {isLoading && (
+          <p className="text-center text-white/40 text-sm mt-6 font-mono">
+            Loading timer...
+          </p>
+        )}
+
         {/* Форма сброса */}
         <form
           onSubmit={handleSubmit}
           className="max-w-md mx-auto mt-12"
         >
-
           <div className="flex gap-3">
 
             <input
-              type="text"
+              type="password"
               inputMode="numeric"
               value={inputValue}
               onChange={(e) => {
@@ -674,14 +775,16 @@ const Timer = () => {
                 setError('');
               }}
               placeholder="Reset-Code eingeben"
+              autoComplete="off"
               className="flex-1 min-w-0 bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white outline-none focus:border-accent transition-colors"
             />
 
             <button
               type="submit"
-              className="px-6 py-3 bg-accent text-black font-bold rounded-lg hover:bg-white transition-colors"
+              disabled={isResetting || isLoading || startTime === null}
+              className="px-6 py-3 bg-accent text-black font-bold rounded-lg hover:bg-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              SUBMIT
+              {isResetting ? 'WAIT...' : 'SUBMIT'}
             </button>
 
           </div>
@@ -698,6 +801,7 @@ const Timer = () => {
     </section>
   );
 };
+
 
 
 export default function App() {
