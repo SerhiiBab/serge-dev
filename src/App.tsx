@@ -242,7 +242,7 @@ const Projects = () => {
             <h2 className="text-4xl md:text-6xl font-display font-bold">PROJEKTE</h2>
           </div>
           <p className="max-w-xs text-white/50 text-sm font-mono uppercase tracking-wider">
-            Eine Sammlung von Projekten, die meine technische Reise und kreative Vision definieren.
+            EEine Sammlung von Projekten, die meine technische Reise und kreative Vision definieren.
           </p>
         </div>
         
