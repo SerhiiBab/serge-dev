@@ -242,7 +242,7 @@ const Projects = () => {
             <h2 className="text-4xl md:text-6xl font-display font-bold">PROJEKTE</h2>
           </div>
           <p className="max-w-xs text-white/50 text-sm font-mono uppercase tracking-wider">
-            EEine Sammlung von Projekten, die meine technische Reise und kreative Vision definieren.
+            Eine Sammlung von Projekten, die meine technische Reise und kreative Vision definieren.
           </p>
         </div>
         
@@ -543,9 +543,153 @@ const Footer = () => {
           ERSTELLT MIT REACT & TAILWIND
         </div>
       </div>
+
     </footer>
   );
 };
+
+
+const Timer = () => {
+  // 1. Время начала отсчёта
+  const [startTime, setStartTime] = useState(() => {
+    const savedTime = localStorage.getItem('timerStartTime');
+
+    return savedTime ? Number(savedTime) : Date.now();
+  });
+
+  // 2. Текущее время
+  const [currentTime, setCurrentTime] = useState(Date.now());
+
+  // 3. Значение поля ввода
+  const [inputValue, setInputValue] = useState('');
+
+  // 4. Сообщение об ошибке
+  const [error, setError] = useState('');
+
+  // 5. Запускаем интервал
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentTime(Date.now());
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  // 6. Сохраняем время начала в localStorage
+  useEffect(() => {
+    localStorage.setItem('timerStartTime', String(startTime));
+  }, [startTime]);
+
+  // 7. Вычисляем прошедшее время
+  const elapsed = Math.max(0, currentTime - startTime);
+
+  const totalSeconds = Math.floor(elapsed / 1000);
+
+  const days = Math.floor(totalSeconds / 86400);
+
+  const hours = Math.floor((totalSeconds % 86400) / 3600);
+
+  const minutes = Math.floor((totalSeconds % 3600) / 60);
+
+  const seconds = totalSeconds % 60;
+
+  // 8. Обрабатываем отправку формы
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (inputValue === '3555') {
+      const now = Date.now();
+
+      setStartTime(now);
+      setCurrentTime(now);
+      setInputValue('');
+      setError('');
+    } else {
+      setError('Falscher Code!');
+    }
+  };
+
+  return (
+    <section className="py-24">
+      <div className="max-w-7xl mx-auto px-6">
+
+        <div className="text-center mb-12">
+          <span className="text-accent font-mono text-sm uppercase tracking-[0.3em]">
+            Live Counter
+          </span>
+
+          <h2 className="text-4xl md:text-5xl font-display font-bold mt-4">
+            ZEITZÄHLER
+          </h2>
+        </div>
+
+        {/* Отображение времени */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mx-auto">
+
+          {[
+            { label: 'Tage', value: days },
+            { label: 'Stunden', value: hours },
+            { label: 'Minuten', value: minutes },
+            { label: 'Sekunden', value: seconds }
+          ].map((item) => (
+            <div
+              key={item.label}
+              className="glass rounded-xl p-6 text-center border border-white/10"
+            >
+              <div className="text-4xl md:text-5xl font-display font-bold text-accent tabular-nums">
+                {item.value}
+              </div>
+
+              <div className="text-xs font-mono text-white/40 uppercase tracking-widest mt-3">
+                {item.label}
+              </div>
+            </div>
+          ))}
+
+        </div>
+
+        {/* Форма сброса */}
+        <form
+          onSubmit={handleSubmit}
+          className="max-w-md mx-auto mt-12"
+        >
+
+          <div className="flex gap-3">
+
+            <input
+              type="text"
+              inputMode="numeric"
+              value={inputValue}
+              onChange={(e) => {
+                setInputValue(e.target.value);
+                setError('');
+              }}
+              placeholder="Reset-Code eingeben"
+              className="flex-1 min-w-0 bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white outline-none focus:border-accent transition-colors"
+            />
+
+            <button
+              type="submit"
+              className="px-6 py-3 bg-accent text-black font-bold rounded-lg hover:bg-white transition-colors"
+            >
+              SUBMIT
+            </button>
+
+          </div>
+
+          {error && (
+            <p className="text-red-500 text-sm mt-3 font-mono">
+              {error}
+            </p>
+          )}
+
+        </form>
+
+      </div>
+    </section>
+  );
+};
+
 
 export default function App() {
   return (
@@ -560,6 +704,7 @@ export default function App() {
         <Contact />
       </main>
       <Footer />
+      <Timer />
     </div>
   );
 }
