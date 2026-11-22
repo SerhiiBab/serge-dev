@@ -624,7 +624,7 @@ const Timer = () => {
 
         <div className="text-center mb-12">
           <span className="text-accent font-mono text-sm uppercase tracking-[0.3em]">
-            Live Counter
+            Livee Counter
           </span>
 
           <h2 className="text-4xl md:text-5xl font-display font-bold mt-4">
